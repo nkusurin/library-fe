@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { GET_BOOK_BY_ID } from "../services/BookService";
-import { GET_LOANS_FOR_BOOK_BY_ID } from "../services/LoanService";
+import { GET_LOANS_FOR_BOOK_BY_ID, DELETE_LOAN_FOR_BOOK_BY_ID } from "../services/LoanService";
 import { useNavigate } from "react-router-dom";
 
 function BookDetails(props) {
@@ -56,6 +56,16 @@ function BookDetails(props) {
     console.log("Loan with id; ", loanId);
     navigate(`/edit-loan/${loanId}`);
   };
+  
+  const handleDeleteLoan = useCallback(async (id) => {
+        const response = await DELETE_LOAN_FOR_BOOK_BY_ID(id);
+        console.log("book deleted > ", response.data);
+        if (response.error) {
+            throw new Error("no books in databse");
+        } else {
+            window.location.reload(false);
+        }
+    }, []);
 
   return (
     <div className="container mx-auto p-4">
@@ -200,6 +210,21 @@ function BookDetails(props) {
         {book.loans.map((loan, index) => (
           <div key={index} className="bg-gray-200 rounded-md p-4">
             <span onClick={() => handleEditLoan(loan.id)}>&#9998;</span>
+            <span onClick={() => handleDeleteLoan(loan.id)}
+                    style={{
+                        cursor: 'default',
+                        backgroundColor: 'rgb(237, 76, 76)',
+                        margin: '10px',
+                        padding: '3px'
+                    }}
+                    onMouseOver={(e) => {
+                        e.target.style.backgroundColor = 'rgb(255, 97, 97)';
+                        e.target.style.cursor = 'pointer';
+                    }}
+                    onMouseOut={(e) => {
+                        e.target.style.backgroundColor = 'rgb(237, 76, 76)';
+                        e.target.style.cursor = 'default';
+                    }}>delete</span>
             <p className="font-medium">Posudba {index + 1}</p>
             <div className="grid grid-cols-2 gap-4">
               <div>
