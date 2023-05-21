@@ -77,7 +77,7 @@ function LoanForm(props) {
             type="datetime-local"
             id="borrowed"
             name="borrowed"
-            value={newLoan.borrowed}
+            value={newLoan.borrowed ? newLoan.borrowed.substring(0, 16) : ''}
             onChange={(e) => handleChange(e)}
             className="border border-gray-400 rounded-md px-3 py-2 mt-1 w-full"
           />
@@ -91,7 +91,7 @@ function LoanForm(props) {
             type="datetime-local"
             id="returned"
             name="returned"
-            value={newLoan.returned}
+            value={newLoan.returned ? newLoan.returned.substring(0, 16) : ''}
             onChange={(e) => handleChange(e)}
             className="border border-gray-400 rounded-md px-3 py-2 mt-1 w-full"
           />
