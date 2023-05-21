@@ -21,6 +21,17 @@ export const POST_NEW_LOAN = async (newLoan) => {
   }
 };
 
+export const DELETE_LOAN_FOR_BOOK_BY_ID = async (id) => {
+    try {
+        const response = await axios.delete(`/loans/${id}`);
+        console.log("LOANSI > ", response.data);
+        return { error: false, data: response.data };
+    } catch (err) {
+        console.error(err);
+        return { error: true, data: err };
+    }
+};
+
 export const EDIT_LOAN = async (loanId, updatedLoan) => {
   try {
     const response = await axios.put(`/loans/${loanId}`, updatedLoan);
